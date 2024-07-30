@@ -53,7 +53,7 @@ bet_amount_wei = w3.to_wei(bet_amount, 'ether')
 def bet_bear(epoch):
     nonce = w3.eth.get_transaction_count(public_address)
     base_fee = w3.eth.get_block('latest')['baseFeePerGas']
-    max_priority_fee = w3.to_wei('4', 'gwei')
+    max_priority_fee = w3.to_wei('5', 'gwei')
     max_fee_per_gas = base_fee + max_priority_fee
     gas_limit = 568860
     txn = contract.functions.betBear(epoch).build_transaction({
@@ -72,11 +72,11 @@ def claim_rewards(epoch):
     # Use 'pending' to get the correct nonce in case there are pending transactions
     nonce = w3.eth.get_transaction_count(public_address, 'pending')
     base_fee = w3.eth.get_block('latest')['baseFeePerGas']
-    max_priority_fee = w3.to_wei('4', 'gwei')
+    max_priority_fee = w3.to_wei('5', 'gwei')
     max_fee_per_gas = base_fee + max_priority_fee
     txn = contract.functions.claim([epoch]).build_transaction({
         'chainId': 42161,  # Arbitrum mainnet chain ID
-        'gas': 438860,
+        'gas': 538860,
         'maxFeePerGas': max_fee_per_gas,
         'maxPriorityFeePerGas': max_priority_fee,
         'nonce': nonce
@@ -138,9 +138,9 @@ try:
             # Check if the account has enough funds to place the bet
             account_balance = w3.eth.get_balance(public_address)
             base_fee = w3.eth.get_block('latest')['baseFeePerGas']
-            max_priority_fee = w3.to_wei('4', 'gwei')
+            max_priority_fee = w3.to_wei('5', 'gwei')
             max_fee_per_gas = base_fee + max_priority_fee
-            gas_limit = 438860
+            gas_limit = 538860
             total_cost = bet_amount_wei + (gas_limit * max_fee_per_gas)
             if account_balance < total_cost:
                 print(f"Insufficient funds to place bet on epoch {current_epoch}. Needed: {total_cost}, Available: {account_balance}")
